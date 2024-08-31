@@ -72,9 +72,7 @@
   --checkbox-border-width: var(--input-border-width);
   --checkbox-label-background-fill: var(--ctp-surface0);
   --checkbox-label-background-fill-hover: var(--ctp-surface0);
-  --checkbox-label-background-fill-selected: var(
-    --checkbox-label-background-fill
-  );
+  --checkbox-label-background-fill-selected: var(--checkbox-label-background-fill);
   --checkbox-label-border-color: var(--border-color-primary);
   --checkbox-label-border-color-hover: var(--checkbox-label-border-color);
   --checkbox-label-border-width: var(--input-border-width);
@@ -97,11 +95,9 @@
     var(--shadow-inset);
   --loader_color: None;
   --slider_color: None;
-  --stat-background-fill: linear-gradient(
-    to right,
-    var(--primary-400),
-    var(--primary-600)
-  );
+  --stat-background-fill: linear-gradient(to right,
+      var(--primary-400),
+      var(--primary-600));
   --table-border-color: var(--neutral-700);
   --table-even-background-fill: var(--neutral-950);
   --table-odd-background-fill: var(--neutral-900);
@@ -139,6 +135,7 @@ input[type='range']::-ms-fill-lower {
   background: var(--ctp-accent);
   border-radius: 10px;
 }
+
 input[type='range']::-ms-fill-upper {
   background: var(--ctp-overlay0);
   border-radius: 10px;
@@ -147,6 +144,7 @@ input[type='range']::-ms-fill-upper {
 input[type='range']:focus::-ms-fill-lower {
   background: var(--ctp-accent);
 }
+
 input[type='range']:focus::-ms-fill-upper {
   background: var(--ctp-overlay0);
 }
@@ -162,7 +160,8 @@ input::-webkit-inner-spin-button {
 input[type='number'] {
   -moz-appearance: textfield;
 }
-.gr-box > div > div > input.gr-text-input {
+
+.gr-box>div>div>input.gr-text-input {
   width: 4em;
 }
 
@@ -245,27 +244,23 @@ input[type='range']::-webkit-slider-thumb {
   --clip-top: calc((var(--thumb-height) - var(--track-height)) * 0.5 - 0.5px);
   --clip-bottom: calc(var(--thumb-height) - var(--clip-top));
   --clip-further: calc(100% + 1px);
-  --box-fill: calc(-100vmax - var(--thumb-width, var(--thumb-height))) 0 0
-    100vmax currentColor;
+  --box-fill: calc(-100vmax - var(--thumb-width, var(--thumb-height))) 0 0 100vmax currentColor;
 
   width: var(--thumb-width, var(--thumb-height));
-  background: linear-gradient(currentColor 0 0) scroll no-repeat left center /
-    50% calc(var(--track-height) + 1px);
+  background: linear-gradient(currentColor 0 0) scroll no-repeat left center / 50% calc(var(--track-height) + 1px);
   background-color: currentColor;
   box-shadow: var(--box-fill);
   border-radius: var(--thumb-width, var(--thumb-height));
 
   filter: brightness(100%);
-  clip-path: polygon(
-    100% -1px,
-    var(--clip-edges) -1px,
-    0 var(--clip-top),
-    -100vmax var(--clip-top),
-    -100vmax var(--clip-bottom),
-    0 var(--clip-bottom),
-    var(--clip-edges) 100%,
-    var(--clip-further) var(--clip-further)
-  );
+  clip-path: polygon(100% -1px,
+      var(--clip-edges) -1px,
+      0 var(--clip-top),
+      -100vmax var(--clip-top),
+      -100vmax var(--clip-bottom),
+      0 var(--clip-bottom),
+      var(--clip-edges) 100%,
+      var(--clip-further) var(--clip-further));
 }
 
 input[type='range']:hover::-webkit-slider-thumb {
@@ -279,8 +274,7 @@ input[type='range']:active::-webkit-slider-thumb {
 }
 
 input[type='range']::-webkit-slider-runnable-track {
-  background: linear-gradient(var(--track-color) 0 0) scroll no-repeat center /
-    100% calc(var(--track-height) + 1px);
+  background: linear-gradient(var(--track-color) 0 0) scroll no-repeat center / 100% calc(var(--track-height) + 1px);
 }
 
 input[type='range']:disabled::-webkit-slider-thumb {
