@@ -7,9 +7,13 @@ import re
 import os
 
 
-section = ("ctp", "Catppuccin Theme")
+flavors: tuple[str] = (
+    "latte",
+    "frappe",
+    "macchiato",
+    "mocha",
+)
 
-flavors: tuple[str] = ("latte", "frappe", "macchiato", "mocha")
 accents: tuple[str] = (
     "rosewater",
     "flamingo",
@@ -27,37 +31,63 @@ accents: tuple[str] = (
     "lavender",
 )
 
-script_path = os.path.dirname(os.path.dirname(os.path.realpath(__file__)))
+script_path = os.path.normpath(os.path.dirname(os.path.dirname(__file__)))
 
 
 def on_accent_change():
-    # replace the color
     with open(os.path.join(script_path, "style.css"), "r+") as file:
-        pattern = re.compile(r"--ctp-accent:\s*(.*)")
-        text = re.sub(
-            pattern,
-            f"--ctp-accent: var(--ctp-{opts.accent_color});",
-            file.read(),
-            count=1,
-        )
+        style = file.read()
 
-        file.seek(0)
-        file.write(text)
-        file.truncate()
+    pattern = re.compile(r"--ctp-accent:\s*(.*)")
+    style = re.sub(
+        pattern,
+        f"--ctp-accent: var(--ctp-{opts.accent_color});",
+        style,
+        count=1,
+    )
+
+    with open(os.path.join(script_path, "style.css"), "w") as file:
+        file.write(style)
+
+    on_waves_change()
 
 
 def on_flavor_change():
-    # Move css over
     shutil.copy(
         os.path.join(script_path, "flavors", f"{opts.ctp_flavor}.css"),
         os.path.join(script_path, "style.css"),
     )
 
-    # re-appply accent color
     on_accent_change()
 
 
+def on_waves_change():
+    with open(os.path.join(script_path, "style.css"), "r+") as file:
+        style = file.read()
+
+    _edit = False
+    animated: bool = "gradio-app" in style
+    animating: bool = opts.oled_waves
+
+    if animated and (not animating):
+        style = style.split("body gradio-app")[0]
+        _edit = True
+
+    if (not animated) and animating:
+        with open(os.path.join(script_path, "flavors", "waves.css"), "r") as waves:
+            anim = waves.read()
+        style = f"{style}{anim}"
+        _edit = True
+
+    if not _edit:
+        return
+
+    with open(os.path.join(script_path, "style.css"), "w") as file:
+        file.write(style)
+
+
 def on_settings():
+    args = {"section": ("ctp", "Catppuccin Theme"), "category_id": "ui"}
 
     opts.add_option(
         "ctp_flavor",
@@ -67,8 +97,7 @@ def on_settings():
             component=gr.Radio,
             component_args={"choices": flavors},
             onchange=on_flavor_change,
-            section=section,
-            category_id="ui",
+            **args,
         ),
     )
 
@@ -80,9 +109,19 @@ def on_settings():
             component=gr.Radio,
             component_args={"choices": accents},
             onchange=on_accent_change,
-            section=section,
-            category_id="ui",
+            **args,
         ),
+    )
+
+    opts.add_option(
+        "oled_waves",
+        OptionInfo(
+            default=False,
+            label="Background Animation",
+            component=gr.Checkbox,
+            onchange=on_waves_change,
+            **args,
+        ).info("mainly for OLED monitor"),
     )
 
 

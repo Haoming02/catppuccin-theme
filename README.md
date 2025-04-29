@@ -1,15 +1,18 @@
 <h3 align="center">
 <img src="https://raw.githubusercontent.com/catppuccin/catppuccin/main/assets/logos/exports/1544x1544_circle.png" width="128" alt="Logo"><br>
-Catppuccin Theme for <a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui">Stable Diffusion Web UI</a>
+Catppuccin Theme for <a href="https://github.com/AUTOMATIC1111/stable-diffusion-webui">Stable Diffusion WebUI</a>
 </h3>
 
 <br>
 
-<p align="center"><img src="./assets.png"/></p>
+<p align="center">
+<img src="./ui.webp"/><br>
+<sup><i>also compatible with <a href="https://github.com/Haoming02/sd-webui-forge-classic">Forge</a></i></sup>
+</p>
 
 <br>
 
-### Installation 
+### Installation
 
 1. Open WebUI
 2. Click on the "**Extensions**" tab
