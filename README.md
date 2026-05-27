@@ -7,7 +7,7 @@ Catppuccin Theme for <a href="https://github.com/AUTOMATIC1111/stable-diffusion-
 
 <p align="center">
 <img src="./ui.webp"/><br>
-<sup><i>also compatible with <a href="https://github.com/Haoming02/sd-webui-forge-classic">Forge</a></i></sup>
+<sup><i>also compatible with <a href="https://github.com/Haoming02/sd-webui-forge-classic/tree/neo">Forge</a></i></sup>
 </p>
 
 <br>

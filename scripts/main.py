@@ -1,36 +1,29 @@
+import os.path
+import re
+
 from modules.script_callbacks import on_ui_settings
 from modules.shared import OptionInfo, opts
 
-import shutil
-import re
-import os
-
-script_path = os.path.normpath(os.path.dirname(os.path.dirname(__file__)))
+SCRIPT = os.path.abspath(os.path.dirname(os.path.dirname(__file__)))
+FLAVORS = os.path.join(SCRIPT, "flavors")
 
 
-def on_accent_change():
-    with open(os.path.join(script_path, "style.css"), "r+") as file:
-        style = file.read()
+def on_change():
+    with open(os.path.join(FLAVORS, f"{opts.ctp_flavor}.css"), "r") as file:
+        flavor = file.read()
+    with open(os.path.join(FLAVORS, "base.css"), "r") as file:
+        base = file.read()
 
     pattern = re.compile(r"--ctp-accent:\s*(.*)")
-    style = re.sub(
+    base = re.sub(
         pattern,
         f"--ctp-accent: var(--ctp-{opts.accent_color});",
-        style,
+        base,
         count=1,
     )
 
-    with open(os.path.join(script_path, "style.css"), "w") as file:
-        file.write(style)
-
-
-def on_flavor_change():
-    shutil.copy(
-        os.path.join(script_path, "flavors", f"{opts.ctp_flavor}.css"),
-        os.path.join(script_path, "style.css"),
-    )
-
-    on_accent_change()
+    with open(os.path.join(SCRIPT, "style.css"), "w") as file:
+        file.write("\n".join([flavor, base]))
 
 
 def on_settings():
@@ -38,13 +31,7 @@ def on_settings():
 
     args = {"section": ("ctp", "Catppuccin Theme"), "category_id": "ui"}
 
-    flavors: tuple[str] = (
-        "latte",
-        "frappe",
-        "macchiato",
-        "mocha",
-        "burnt",
-    )
+    flavors: tuple[str] = ("latte", "frappe", "macchiato", "mocha", "burnt")
 
     accents: tuple[str] = (
         "rosewater",
@@ -70,7 +57,7 @@ def on_settings():
             label="Catppuccin Flavor",
             component=Radio,
             component_args={"choices": flavors},
-            onchange=on_flavor_change,
+            onchange=on_change,
             **args,
         ),
     )
@@ -82,7 +69,7 @@ def on_settings():
             label="Accent",
             component=Radio,
             component_args={"choices": accents},
-            onchange=on_accent_change,
+            onchange=on_change,
             **args,
         ),
     )
