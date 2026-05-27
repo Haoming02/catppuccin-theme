@@ -15,10 +15,10 @@ def on_change():
         base = file.read()
 
     pattern = re.compile(r"--ctp-accent:\s*(.*)")
-    base = re.sub(
+    flavor = re.sub(
         pattern,
         f"--ctp-accent: var(--ctp-{opts.accent_color});",
-        base,
+        flavor,
         count=1,
     )
 
